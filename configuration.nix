@@ -1,3 +1,4 @@
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -46,13 +47,6 @@ in
     LC_TIME = "en_BW.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "bw";
@@ -62,45 +56,44 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  
+  # Install zsh and oh-my-zsh
+  programs.zsh = {
+    enable = true;
+    enableBashCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    ohMyZsh = {
+	enable = true;
+	custom = "$HOME/.oh-my-zsh/custom";
+	theme = "powerlevel10k/powerlevel10k";
+    };
+  };
+
+  environment.shells = with pkgs; [zsh];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.will = {
     isNormalUser = true;
     description = "Will";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
   };
 
-  home-manager.users.will = {pkgs, ...}: {
-    home.packages = [ neovim httpie ];
-    programs.zsh.enable = true;
-    programs.zsh.ohMyZsh = {
-      enable = true
-    }
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
 
-    home.stateVersion = "25.05"
+  # Run unpatched dynamic binaries
+  programs.nix-ld = {
+	enable = true;
+	libraries = with pkgs; [
+	  stdenv.cc.cc
+	];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -118,7 +111,9 @@ in
     python311Packages.pip
     git
     gh
+    gcc
   ];
+
 
   # Enable nix flakes and command-line tools
   nix.settings.experimental-features = ["nix-command" "flakes"];
