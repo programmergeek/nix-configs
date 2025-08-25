@@ -8,7 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
-    waybar.url = "github:Alexays/Waybar/master";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:

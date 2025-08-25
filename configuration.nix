@@ -108,6 +108,8 @@
     git
     gh
     gcc
+    pnpm
+    dbeaver-bin
   ];
 
 

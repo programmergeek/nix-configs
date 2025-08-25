@@ -16,6 +16,13 @@
 	    unzip
 	    gparted
 	    nix-index
+	    gtk3
+	    gtk-layer-shell
+	    pango
+	    cairo
+	    gcc
+	    libgcc
+	    pkg-config
 	];
     programs.zellij.enable = true;
 
