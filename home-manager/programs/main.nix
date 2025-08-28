@@ -1,5 +1,7 @@
 { pkgs, ... }: {
-    imports = [];
+    imports = [
+	./browsers.nix
+    ];
     home.packages = with pkgs; [
 	gimp3
 	blender
