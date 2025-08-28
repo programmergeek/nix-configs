@@ -21,13 +21,14 @@
         ./configuration.nix
         ./hardware-configuration.nix
         ./system/desktop-environments/common.nix
+	home-manager.nixosModules.home-manager {
+	    home-manager.useGlobalPkgs = true;
+	    home-manager.useUserPackages = true;
+	    home-manager.backupFileExtension = "backup";
+	    home-manager.extraSpecialArgs = { inherit inputs; };
+	    home-manager.users.will = import ./home-manager/home.nix;
+	}
       ];
-    };
-
-    homeConfigurations.will = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs { system = "x86_64-linux"; };
-      extraSpecialArgs = { inherit inputs username; };
-      modules = [ ./home-manager/home.nix ];
     };
   };
 }
