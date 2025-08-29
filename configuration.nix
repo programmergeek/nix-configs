@@ -116,6 +116,13 @@
   # Enable nix flakes and command-line tools
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  
+  hardware.graphics = {
+   enable = true;
+   extraPackages = with pkgs; [
+     rocmPackages.clr.icd
+   ];
+ };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
