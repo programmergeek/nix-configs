@@ -110,6 +110,7 @@
     gcc
     pnpm
     dbeaver-bin
+    gnomeExtensions.gsconnect
   ];
 
 
