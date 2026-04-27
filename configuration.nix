@@ -72,15 +72,32 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.will = {
+    home = "/home/will";
     isNormalUser = true;
     description = "Will";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
 
+  fonts.enableDefaultPackages = true;
+  fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    noto-fonts-color-emoji
   ];
+
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      serif = [ "Noto Serif" "Noto Color Emoji" ];
+      sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
+      monospace = [ "Noto Sans Mono" "Noto Color Emoji" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
+  };
 
   # Run unpatched dynamic binaries
   programs.nix-ld = {
@@ -89,10 +106,13 @@
 	  stdenv.cc.cc
 	];
   };
-  
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Allow unsupported systems 
+  nixpkgs.config.allowUnsupportedSystem = true;
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -102,17 +122,21 @@
     nodejs
     google-chrome
     cargo
-    neofetch
-    python311
-    python311Packages.pip
+    fastfetch
+    python313
+    python313Packages.pip
     git
     gh
     gcc
     pnpm
     dbeaver-bin
     gnomeExtensions.gsconnect
+    neovim
+    cachix
+    dhcpm
   ];
 
+  programs.steam.enable = true;
 
   # Enable nix flakes and command-line tools
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -138,10 +162,14 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [
+    8000
+    8081
+    3000
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
