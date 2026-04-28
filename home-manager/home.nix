@@ -4,6 +4,7 @@
 	./desktop-environments/hyprland.nix
 	./programs/main.nix
 	./dev-envs/main.nix
+	inputs.vicinae.homeManagerModules.default
     ];
 
     home.packages = with pkgs; [ 
@@ -18,8 +19,27 @@
 	cairo
 	gcc
 	libgcc
+	zed-editor
+	android-studio
+	fish
+	awww
+	obs-studio
     ];
-    programs.zellij.enable = true;
 
+    services.vicinae = {
+        enable = true;
+	systemd = {
+	    enable = true;
+	    autoStart = true;
+	    environment = {
+		USE_LAYER_SHELL = 1;
+	};
+	};
+    };
+
+    home.homeDirectory = "/home/will";
+
+    programs.zellij.enable = true;
+    programs.eww.enable = true;
     home.stateVersion = "25.11";
 }
