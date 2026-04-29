@@ -24,6 +24,7 @@
 	fish
 	awww
 	obs-studio
+	dunst
     ];
 
     services.vicinae = {
