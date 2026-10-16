@@ -21,5 +21,7 @@
     cachix
     dhcpm
     ninja
+    t3code
+    pi-coding-agent
   ];
 }

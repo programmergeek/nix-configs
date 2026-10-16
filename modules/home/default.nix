@@ -21,6 +21,8 @@
     };
   };
 
+  systemd.user.services.vicinae.Service.Environment = [ "QSG_RHI_BACKEND=vulkan" ];
+
   home = {
     username = username;
     homeDirectory = "/home/${username}";

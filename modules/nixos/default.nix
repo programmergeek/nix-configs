@@ -83,6 +83,10 @@
     allowUnsupportedSystem = true;
   };
 
+  virtualisation.virtualbox.host.enable = true;
+
+  # Optional: Enable the VirtualBox extension pack
+  virtualisation.virtualbox.host.enableExtensionPack = true;
   programs.steam.enable = true;
   qt.enable = true;
   nix.settings.experimental-features = [

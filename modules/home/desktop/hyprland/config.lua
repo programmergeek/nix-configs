@@ -1,7 +1,7 @@
 local mainMod = "SUPER"
 local terminal = "alacritty"
 local fileManager = "nautilus"
-local menu = "vicinae open"
+local menu = "vicinae toggle"
 
 hl.monitor({
 	output = "",
@@ -16,6 +16,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("dunst")
 	hl.exec_cmd("qs -c overview")
 	hl.exec_cmd("qs -c shell")
+	hl.exec_cmd("qa -c bar")
 end)
 
 hl.env("XCURSOR_SIZE", "24")
@@ -33,7 +34,7 @@ hl.config({
 	},
 	general = {
 		gaps_in = 5,
-		gaps_out = 2,
+		gaps_out = 12,
 		border_size = 2,
 		col = {
 			active_border = {
@@ -67,6 +68,13 @@ hl.config({
 	animations = {
 		enabled = true,
 	},
+})
+
+hl.layer_rule({
+	match = { namespace = "vicinae" },
+	name = "vicinae-blur",
+	blur = true,
+	ignore_alpha = 0,
 })
 
 hl.curve("easeOutQuint", {
